@@ -1,0 +1,177 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Définition des structures
+typedef struct {
+    int busID;
+    char destination[50];
+    int capacity;
+    int reservedSeats;
+} Bus;
+
+typedef struct {
+    int reservationID;
+    int busID;
+    char NomVoyageur[50];
+    int numSeats;
+} Reservation;
+
+typedef struct {
+    int voyageurID;
+    char NomVoyageur[50];
+} Voyageur;
+
+// Déclaration des fonctions
+void createVoyageur(Voyageur *Voyageur);
+void createReservation(Reservation *reservation);
+void displayBusDetails(Bus *bus, int numBus);
+void displayReservationDetails(Reservation *reservations, int numReservations);
+void modifyReservationDetails(Reservation *reservations, int numReservations);
+
+
+// Fonction principale
+int main() {
+    // Initialiser des tableaux de structures pour stocker les données
+    Bus bus[10];  // Supposons que nous ayons 10 bus au maximum
+    Reservation reservations[50];  // Supposons que nous ayons 50 réservations au maximum
+    Voyageur Voyageur[50];  // Supposons que nous ayons 50 voyageurs au maximum
+
+    int numBus = 0;
+    int numReservations = 0;
+    int numVoyageur = 0;
+
+    int choix;
+
+    do {
+
+        printf("1. Créer un nouveau compte voyageur\n");
+        printf("2. Créer une nouvelle réservation\n");
+        printf("3. Afficher les détails des bus\n");
+        printf("4. Afficher et modifier les détails d'une réservation\n");
+        printf("5. annuler Reservation\n");
+        printf("6. Quitter\n");
+
+
+        printf("Choix: ");
+        scanf("%d", &choix);
+        // ...
+
+void displayBusDetails(Bus *bus, int numBus) {
+    if (numBus == 0) {
+        printf("Aucun bus n'est disponible.\n");
+        return;
+    }
+
+    printf("Détails des bus :\n");
+    for (int i = 0; i < numBus; ++i) {
+        printf("Bus #%d - Destination: %s - Capacité: %d - Places réservées: %d\n",
+               bus[i].busID, bus[i].destination, bus[i].capacity, bus[i].reservedSeats);
+    }
+}
+
+void displayReservationDetails(Reservation *reservations, int numReservations) {
+    if (numReservations == 0) {
+        printf("Aucune réservation n'a été effectuée.\n");
+        return;
+    }
+
+    printf("Détails des réservations :\n");
+    for (int i = 0; i < numReservations; ++i) {
+        printf("Réservation #%d - Bus #%d - Voyageur: %s - Places réservées: %d\n",
+               reservations[i].reservationID, reservations[i].busID,
+               reservations[i].NomVoyageur, reservations[i].numSeats);
+    }
+}
+
+// ...
+
+
+        switch (choix) {
+            case 1:
+                createVoyageur(&Voyageur[numVoyageur]);
+                numVoyageur++;
+                break;
+            case 2:
+                createReservation(&reservations[numReservations]);
+                numReservations++;
+                break;
+            case 3:
+                displayBusDetails(bus, numBus);
+                break;
+            case 4:
+                displayReservationDetails(reservations, numReservations);
+                modifyReservationDetails(reservations, numReservations);
+                break;
+            case 6:
+                printf("Au revoir!\n");
+                break;
+            case 5:
+              cancelReservation(reservations, &numReservations);
+              break;
+            default:
+                printf("Choix invalide. Veuillez réessayer.\n");
+        }
+    } while (choix != 5);
+
+    return 0;
+}
+
+void createVoyageur(Voyageur *Voyageur) {
+    printf("Entrez le nom du voyageur: ");
+    scanf("%s", Voyageur->NomVoyageur);
+    // Vous pouvez ajouter d'autres informations sur le voyageur ici si nécessaire
+}
+
+void createReservation(Reservation *reservation) {
+    printf("Entrez l'ID du bus pour la réservation: ");
+    scanf("%d", &reservation->busID);
+    printf("Entrez le nom du voyageur: ");
+    scanf("%s", reservation->NomVoyageur);
+    printf("Entrez le nombre de places réservées: ");
+    scanf("%d", &reservation->numSeats);
+    // Vous pouvez ajouter d'autres informations sur la réservation ici si nécessaire
+}
+
+void displayBusDetails(Bus *bus, int numBus) {
+    // Affiche les détails de chaque bus dans le tableau
+}
+
+void displayReservationDetails(Reservation *reservations, int numReservations) {
+    // Affiche les détails de chaque réservation dans le tableau
+}
+
+void modifyReservationDetails(Reservation *reservations, int numReservations) {
+    // Permet à l'utilisateur de modifier les détails d'une réservation
+}
+void cancelReservation(Reservation *reservations, int *numReservations);
+void cancelReservation(Reservation *reservations, int *numReservations);
+
+// Ajouter la définition de la fonction
+void cancelReservation(Reservation *reservations, int *numReservations) {
+    int reservationID;
+    printf("Entrez l'ID de la réservation que vous souhaitez annuler : ");
+    scanf("%d", &reservationID);
+
+    // Rechercher la réservation par ID
+    int i;
+    for (i = 0; i < *numReservations; ++i) {
+        if (reservations[i].reservationID == reservationID) {
+            // Libérer les places réservées dans le bus correspondant (vous devez ajouter cette logique)
+            // ...
+
+            // Supprimer la réservation en décalant les éléments suivants dans le tableau
+            for (int j = i; j < *numReservations - 1; ++j) {
+                reservations[j] = reservations[j + 1];
+            }
+
+            // Décrémenter le nombre total de réservations
+            (*numReservations)--;
+
+            printf("La réservation #%d a été annulée avec succès.\n", reservationID);
+            return;
+        }
+    }
+
+    printf("La réservation #%d n'a pas été trouvée.\n", reservationID);
+}
